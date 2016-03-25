@@ -1,13 +1,16 @@
 module Resque
   module Plugins
     module Aliasing
+      class UnexpectedConstant < ::StandardError; end;
+
       def alias_job klass_name
-        klass = ensure_klass klass_name
+        klass_name = klass_name.name if klass_name.kind_of? Class
+        klass = ensure_klass klass_name.to_s
 
         unless aliased_jobs[klass.name]
           aliased_jobs[klass.name] = 1
-          klass.instance_variable_set :@queue, instance_variable_get(:@queue)
-          klass.instance_variable_set :@destination, self
+          klass.instance_variable_set :@queue, "dummy_queue"
+          klass.instance_variable_set :@resque_aliasing_destination, self
           klass.include AliasedJob
         end
       end
@@ -32,7 +35,11 @@ module Resque
       def ensure_const parent, const_name, klass
         if parent.const_defined? const_name
           const = parent.const_get const_name
-          raise "expected #{const.name} to be a #{klass.name}" unless const.kind_of? Module
+          unless const.kind_of? klass
+            full_const_name = const_name
+            full_const_name = "#{parent.name}::#{full_const_name}" unless parent == Object
+            raise UnexpectedConstant, "Expected #{full_const_name} to be a #{klass.name}"
+          end
           const
         else
           parent.const_set const_name, klass.new

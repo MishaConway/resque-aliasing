@@ -4,12 +4,12 @@ module Resque
       module AliasedJob
         module ClassMethods
           def before_enqueue *args
-            Resque.enqueue @destination, *args
+            Resque.enqueue @resque_aliasing_destination, *args
             false
           end
 
           def perform *args
-            Resque.enqueue @destination, *args
+            Resque.enqueue @resque_aliasing_destination, *args
           end
         end
 
