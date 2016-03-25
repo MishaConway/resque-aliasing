@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{Alias old or removed resque jobs to existing ones.}
   spec.description   = %q{Alias old or removed resque jobs to existing ones.}
-  spec.homepage      = "https://github.com/MishaConway/resque-aliasing."
+  spec.homepage      = "https://github.com/MishaConway/resque-aliasing"
 
   spec.licenses = ["MIT"]
 
