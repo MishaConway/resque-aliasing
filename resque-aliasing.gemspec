@@ -13,6 +13,8 @@ Gem::Specification.new do |spec|
   spec.description   = %q{Alias old or removed resque jobs to existing ones.}
   spec.homepage      = "https://github.com/MishaConway/resque-aliasing."
 
+  spec.licenses = ["MIT"]
+
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
   # delete this section to allow pushing this gem to any host.
   if spec.respond_to?(:metadata)
