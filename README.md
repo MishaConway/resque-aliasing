@@ -25,14 +25,14 @@ The below example illustrates basic usage after we have renamed a job from Worke
 Workers::DiscombobulateCustomer.
 
     class Workers::DiscombobulateCustomer
-        @queue = :low
-
         extend Resque::Plugins::Aliasing
         alias_job 'Workers::Processing::ProcessCustomer'
 
         def self.perform(customer_id)
             # discombobulating customer!
         end
+
+        @queue = :customers
     end
 
 Any Workers::Processing::ProcessCustomer jobs remaining in the queue will just get enqueued as Workers::DiscombobulateCustomer jobs when they are eventually 'performed'.
