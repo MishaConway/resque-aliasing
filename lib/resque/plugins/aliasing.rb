@@ -1,6 +1,3 @@
-require "resque/plugins/aliasing/version"
-require "resque/plugins/aliasing/aliased_job"
-
 module Resque
   module Plugins
     module Aliasing
