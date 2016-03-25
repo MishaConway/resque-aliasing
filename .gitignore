@@ -33,3 +33,13 @@ bower.json
 
 # Ignore pow environment settings
 .powenv
+
+/.bundle/
+/.yardoc
+/Gemfile.lock
+/_yardoc/
+/coverage/
+/doc/
+/pkg/
+/spec/reports/
+/tmp/
