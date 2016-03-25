@@ -22,7 +22,32 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+If you ever want to rename a job, but are worried about versions of the old job still left in your resque queues, just alias it!
+The below example illustrates basic usage after we have renamed a job from Workers::Processing::ProcessCustomer to
+Workers::DiscombobulateCustomer.
+
+    class Workers::DiscombobulateCustomer
+        @queue = :low
+        
+        extend Resque::Plugins::Aliasing
+        alias_job 'Workers::Processing::ProcessCustomer'
+
+        def self.perform(customer_id)
+            # discombobulating customer!
+        end
+    end
+
+Any Workers::Processing::ProcessCustomer jobs remaining in the queue will just get enqueued as Workers::DiscombobulateCustomer jobs when they are eventually 'performed'.
+Additionally, any attempt to enqueue a Workers::Processing::ProcessCustomer job will instead enqueue a Workers::DiscombobulateCustomer job.
+
+
+
+
+
+
+
+
+
 
 ## Development
 
