@@ -1,8 +1,6 @@
 # Resque::Aliasing
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/resque/aliasing`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Resque plugin that allows you to alias jobs to other jobs. Useful when you are renaming jobs or consolidating multiple jobs into one.
 
 ## Installation
 
@@ -28,7 +26,7 @@ Workers::DiscombobulateCustomer.
 
     class Workers::DiscombobulateCustomer
         @queue = :low
-        
+
         extend Resque::Plugins::Aliasing
         alias_job 'Workers::Processing::ProcessCustomer'
 
