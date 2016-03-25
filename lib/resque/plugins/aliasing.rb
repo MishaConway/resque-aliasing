@@ -33,17 +33,20 @@ module Resque
       end
 
       def ensure_const parent, const_name, klass
+        full_const_name = const_name
+        full_const_name = "#{parent.name}::#{full_const_name}" unless parent == Object
+
         if parent.const_defined? const_name
           const = parent.const_get const_name
-          unless const.kind_of? klass
-            full_const_name = const_name
-            full_const_name = "#{parent.name}::#{full_const_name}" unless parent == Object
-            raise UnexpectedConstant, "Expected #{full_const_name} to be a #{klass.name}"
+          if full_const_name == const.name
+            unless const.kind_of? klass
+              raise UnexpectedConstant, "Expected #{full_const_name} to be a #{klass.name}"
+            end
+            return const
           end
-          const
-        else
-          parent.const_set const_name, klass.new
         end
+
+        parent.const_set const_name, klass.new
       end
     end
   end
